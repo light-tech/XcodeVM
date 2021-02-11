@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PBZXParser", "PBZXParser.vcxproj", "{4EC23888-CB7F-446B-9466-E94114C1E46F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EC23888-CB7F-446B-9466-E94114C1E46F}.Debug|x64.ActiveCfg = Debug|x64
+		{4EC23888-CB7F-446B-9466-E94114C1E46F}.Debug|x64.Build.0 = Debug|x64
+		{4EC23888-CB7F-446B-9466-E94114C1E46F}.Debug|x86.ActiveCfg = Debug|Win32
+		{4EC23888-CB7F-446B-9466-E94114C1E46F}.Debug|x86.Build.0 = Debug|Win32
+		{4EC23888-CB7F-446B-9466-E94114C1E46F}.Release|x64.ActiveCfg = Release|x64
+		{4EC23888-CB7F-446B-9466-E94114C1E46F}.Release|x64.Build.0 = Release|x64
+		{4EC23888-CB7F-446B-9466-E94114C1E46F}.Release|x86.ActiveCfg = Release|Win32
+		{4EC23888-CB7F-446B-9466-E94114C1E46F}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5653EDE-9F50-4170-BD2B-96D67C7434C2}
+	EndGlobalSection
+EndGlobal

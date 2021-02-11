@@ -1,0 +1,39 @@
+{
+"version":1,
+"name":"pbzx Parser",
+"build_commands": {
+	"CompileC++" : {
+		"action":"compile",
+		"args":["-fms-extensions", "-fms-compatibility", "-fms-compatibility-version=19", "-x", "c++", "-std=c++14", "-D_CRT_SECURE_NO_WARNINGS"],
+		"sys_include_dir":["C:/MSCpp/include/winsdk/ucrt", "C:/MSCpp/include/msvc"],
+		"include_dir":["include"]
+	},
+	"MakeExe" : {
+		"action":"link",
+		"args":["/defaultlib:msvcrt.lib", "/subsystem:Console"],
+		"sys_lib_dir":["C:/MSCpp/lib/msvc/x86", "C:/MSCpp/lib/winsdk/ucrt/x86", "C:/MSCpp/lib/winsdk/um/x86"],
+		"lib_dir":["lib"]
+	}
+},
+"build_definitions": [
+	{
+		"name":"Compile",
+		"build_steps": [
+			{
+				"command":"CompileC++",
+				"inputs":["pbzx.c"]
+			}
+		]
+	},
+	{
+		"name":"Build Executable",
+		"build_steps": [
+			{
+				"command":"MakeExe",
+				"inputs":["lzma.lib", "pbzx.o"],
+				"output":"pbzx.exe"
+			}
+		]
+	}
+]
+}
