@@ -28,7 +28,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <lzma.h>
-// #include <xar/xar.h>
+
+#ifdef HAVE_XAR
+#include <xar/xar.h>
+#endif
 
 #define XBSZ 4 * 1024
 #define ZBSZ 1024 * XBSZ
@@ -107,7 +110,7 @@ enum {
  * the command-line flags. */
 struct stream {
     int type;       /* One of #STREAM_XAR and #STREAM_FP. */
-#ifdef HAS_XAR
+#ifdef HAVE_XAR
     xar_t xar;      /* Only valid if #type == #STREAM_XAR. */
     xar_stream xs;  /* Only valid if #type == #STREAM_XAR. */
 #endif
@@ -117,7 +120,7 @@ struct stream {
 /* Initialize an empty stream. */
 static void stream_init(struct stream* s) {
     s->type = 0;
-#ifdef HAS_XAR
+#ifdef HAVE_XAR
     s->xar = NULL;
     memset(&s->xs, 0, sizeof(s->xs));
 #endif
@@ -129,7 +132,7 @@ static bool stream_open(struct stream* s, int type, const char* filename) {
     stream_init(s);
     s->type = type;
     switch (type) {
-#ifdef HAS_XAR
+#ifdef HAVE_XAR
         case STREAM_XAR: {
             s->xar = xar_open(filename, READ);
             if (!s->xar) return false;
@@ -162,7 +165,7 @@ static bool stream_open(struct stream* s, int type, const char* filename) {
  * to an empty stream object. */
 static void stream_close(struct stream* s) {
     switch (s->type) {
-#ifdef HAS_XAR
+#ifdef HAVE_XAR
         case STREAM_XAR:
             xar_extract_tostream_end(&s->xs);
             xar_close(s->xar);
@@ -180,7 +183,7 @@ static void stream_close(struct stream* s) {
 static uint32_t stream_read(char* buf, uint32_t size, struct stream* s) {
     if (!s) return 0;
     switch (s->type) {
-#ifdef HAS_XAR
+#ifdef HAVE_XAR
         case STREAM_XAR:
         default:
             s->xs.next_out = buf;
