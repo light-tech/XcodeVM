@@ -20,7 +20,10 @@
  * \created 2014-06-20
  */
 
+#ifdef _WIN32
 #include <Windows.h>
+#endif
+
 #include <errno.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -93,7 +96,7 @@ static void parse_args(int* argc, char const** argv, struct options* opts) {
     }
 }
 
-#ifdef __cplusplus
+#ifndef min /* no min macro */
 static inline uint32_t min(uint32_t a, uint32_t b) {
     return (a < b ? a : b);
 }
@@ -201,15 +204,15 @@ static uint32_t stream_read(char* buf, uint32_t size, struct stream* s) {
     abort();
 }
 
-uint64_t __builtin_bswap64(uint64_t x) {
-    return _byteswap_uint64(x);
-}
-
 /* Reads a #uint64_t from the stream. */
 static inline uint64_t stream_read_64(struct stream* stream) {
     char buf[8];
     stream_read(buf, 8, stream);
+#ifdef _WIN32
+    return _byteswap_uint64(*(uint64_t*) buf);
+#else /* clang, gcc */
     return __builtin_bswap64(*(uint64_t*) buf);
+#endif
 }
 
 FILE* output_file;
@@ -299,10 +302,10 @@ int main(int argc, const char** argv) {
                 cpio_out(xbuf, min(XBSZ, length));
             }
             else {
-                zs.next_in = /*(__typeof__(zs.next_in))*/ xbuf;
+                zs.next_in = /*(decltype(zs.next_in))*/ xbuf;
                 zs.avail_in = min(XBSZ, length);
                 while (zs.avail_in) {
-                    zs.next_out = /*(__typeof__(zs.next_out))*/ zbuf;
+                    zs.next_out = /*(decltype(zs.next_out))*/ zbuf;
                     zs.avail_out = ZBSZ;
                     if (lzma_code(&zs, LZMA_RUN) != LZMA_OK) {
                         fprintf(stderr, "LZMA failure");
